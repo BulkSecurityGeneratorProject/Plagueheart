@@ -1,0 +1,54 @@
+
+<div>
+    <h2><span translate="plagueheartApp.member.detail.title">Member</span> {{member.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="plagueheartApp.member.name">Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{member.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="plagueheartApp.member.mobile">Mobile</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{member.mobile}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="plagueheartApp.member.file">File</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{member.file}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="plagueheartApp.member.company">company</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="company.detail({id:member.company.id})">{{member.company.id}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

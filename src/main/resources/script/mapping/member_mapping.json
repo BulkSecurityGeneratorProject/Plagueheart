@@ -1,0 +1,57 @@
+{
+    "member": {
+        "properties": {
+            "company": {
+                "properties": {
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "long"
+                    }
+                }
+            },
+            "id": {
+                "type": "long"
+            },
+            "mobile": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            },
+            "file": {
+                "type": "attachment",
+                "path": "full",
+                "fields": {
+                    "file": {
+                        "type": "string",
+                        "term_vector": "with_positions_offsets",
+                        "store": true
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string",
+                        "store": "yes"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "date",
+                        "ignore_malformed": false,
+                        "format": "dateOptionalTime"
+                    },
+                    "keywords": {
+                        "type": "string"
+                    },
+                    "content_type": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

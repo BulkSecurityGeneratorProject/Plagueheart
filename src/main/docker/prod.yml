@@ -1,0 +1,20 @@
+plagueheart-elasticsearch:
+  container_name: plagueheart-elasticsearch
+  image: elasticsearch:1.7.3
+  # volumes:
+  #   - ~/volumes/jhipster/Plagueheart/elasticsearch/:/usr/share/elasticsearch/data/
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+plagueheart-mysql:
+  container_name: plagueheart-mysql
+  image: mysql:5.7.9
+  # volumes:
+  #   - ~/volumes/jhipster/Plagueheart/mysql/:/var/lib/mysql/
+  environment:
+    - MYSQL_USER=root
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    - MYSQL_DATABASE=plagueheart
+  ports:
+    - "3306:3306"
+  command: mysqld --lower_case_table_names=1

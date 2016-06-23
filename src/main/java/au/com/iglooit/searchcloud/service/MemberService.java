@@ -3,6 +3,9 @@ package au.com.iglooit.searchcloud.service;
 import au.com.iglooit.searchcloud.domain.Member;
 import au.com.iglooit.searchcloud.repository.MemberRepository;
 import au.com.iglooit.searchcloud.repository.search.MemberSearchRepository;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -86,5 +89,22 @@ public class MemberService {
         return StreamSupport
             .stream(memberSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .collect(Collectors.toList());
+    }
+
+    /**
+     * search member based on the company
+     * @param companyID companyID
+     * @param query query string
+     * @return list of members
+     */
+    @Transactional(readOnly = true)
+    public List<Member> search(String companyID, String query){
+        log.debug("REST request to search Members for company {} and query {}", companyID, query);
+        QueryBuilder queryBuilders = QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("company.id", companyID))
+                .must(queryStringQuery(query));
+        return StreamSupport
+                .stream(memberSearchRepository.search(queryBuilders).spliterator(), false)
+                .collect(Collectors.toList());
     }
 }

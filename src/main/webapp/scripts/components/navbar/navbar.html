@@ -33,7 +33,25 @@
                         &#xA0;<span translate="global.menu.entities.company">Company</span></a></li>
                         <li ui-sref-active="active" ><a ui-sref="member" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
                         &#xA0;<span translate="global.menu.entities.member">Member</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="searchHistory" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
+                        &#xA0;<span translate="global.menu.entities.searchHistory">Search history</span></a></li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    </ul>
+                </li>
+                <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                        <span>
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="hidden-sm" translate="global.menu.search.main">
+                                Search
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active" ><a ui-sref="search" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
+                            &#xA0;<span translate="global.menu.search.search-member">Search Member</span></a></li>
+
                     </ul>
                 </li>
                 <li ng-class="{active: $state.includes('account')}" class="dropdown pointer">

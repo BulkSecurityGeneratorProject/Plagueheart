@@ -1,0 +1,23 @@
+{
+    "plagueheartApp": {
+        "searchHistory" : {
+            "home": {
+                "title": "SearchHistorys",
+                "createLabel": "Create a new SearchHistory",
+                "createOrEditLabel": "Create or edit a SearchHistory",
+                "search": "Search for SearchHistory"
+            },
+            "created": "A new SearchHistory is created with identifier {{ param }}",
+            "updated": "A SearchHistory is updated with identifier {{ param }}",
+            "deleted": "A SearchHistory is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete SearchHistory {{ id }}?"
+            },
+            "detail": {
+                "title": "SearchHistory"
+            },
+            "query": "Query",
+            "queryDate": "QueryDate"
+        }
+    }
+}

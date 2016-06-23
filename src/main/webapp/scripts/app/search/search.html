@@ -1,0 +1,76 @@
+<div>
+    <h2 translate="plagueheartApp.search.home.title">Members</h2>
+    <jh-alert></jh-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 no-padding-right">
+                <form name="searchForm" class="form-inline">
+                    <div class="form-group">
+                        <label translate="plagueheartApp.member.company" for="field_company">company</label>
+                        <select class="form-control" id="field_company" name="company" ng-model="company" ng-options="company as company.id for company in companys track by company.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group pull-right" >
+                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="{{ 'plagueheartApp.member.home.search' | translate }}">
+                        <span  class="input-group-btn width-min" >
+                            <button class="btn btn-info" ng-click="search()">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+            <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="name"><span translate="plagueheartApp.member.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="mobile"><span translate="plagueheartApp.member.mobile">Mobile</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="file"><span translate="plagueheartApp.member.file">File</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="company.id"><span translate="plagueheartApp.member.company">company</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="member in members track by member.id">
+                <td><a ui-sref="member.detail({id:member.id})">{{member.id}}</a></td>
+                <td>{{member.name}}</td>
+                <td>{{member.mobile}}</td>
+                <td>{{member.file}}</td>
+                <td>
+                    <a ui-sref="company.detail({id:member.company.id})">{{member.company.id}}</a>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                ui-sref="member.detail({id:member.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="member.edit({id:member.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="member.delete({id:member.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <uib-pager total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pager>
+</div>

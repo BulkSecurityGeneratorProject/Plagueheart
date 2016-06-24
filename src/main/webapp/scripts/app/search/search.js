@@ -5,6 +5,7 @@ angular.module('plagueheartApp')
         $stateProvider
             .state('search', {
                 url: '/search',
+                parent: 'site',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'plagueheartApp.search.home.title'

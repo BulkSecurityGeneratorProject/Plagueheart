@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "search_history")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "searchhistory")
+@Document(indexName = "searchhistory", type = "membersystem")
 public class SearchHistory implements Serializable {
 
     @Id

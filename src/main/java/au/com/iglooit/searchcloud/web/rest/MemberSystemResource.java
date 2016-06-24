@@ -3,6 +3,7 @@ package au.com.iglooit.searchcloud.web.rest;
 import au.com.iglooit.searchcloud.domain.Company;
 import au.com.iglooit.searchcloud.domain.Member;
 import au.com.iglooit.searchcloud.service.MemberService;
+import au.com.iglooit.searchcloud.service.memberservice.MemberSystemSearchService;
 import au.com.iglooit.searchcloud.service.MemberSystemService;
 import com.codahale.metrics.annotation.Timed;
 import org.slf4j.Logger;
@@ -13,9 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.xml.bind.DatatypeConverter;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 @RestController
@@ -26,6 +24,8 @@ public class MemberSystemResource {
     private MemberService memberService;
     @Inject
     private MemberSystemService memberSystemService;
+    @Inject
+    private MemberSystemSearchService memberSystemSearchService;
 
     /**
      * SEARCH  /_search/members/:query -> search for the member corresponding
@@ -46,7 +46,7 @@ public class MemberSystemResource {
     @Timed
     public List<Member> searchMembersInCompany(@PathVariable String companyID, @PathVariable String query) {
         log.debug("Request to search Members for query {}", query);
-        return memberSystemService.search(companyID, query);
+        return memberSystemSearchService.search(companyID, query);
     }
 
     @RequestMapping(value = "/_upload", headers = "content-type=multipart/*", method = RequestMethod.POST)

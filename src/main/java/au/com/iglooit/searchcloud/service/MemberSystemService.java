@@ -29,20 +29,5 @@ public class MemberSystemService {
         memberSearchRepository.save(member);
     }
 
-    /**
-     * search member based on the company
-     * @param companyID companyID
-     * @param query query string
-     * @return list of members
-     */
-    @Transactional(readOnly = true)
-    public List<Member> search(String companyID, String query){
-        log.debug("REST request to search Members for company {} and query {}", companyID, query);
-        QueryBuilder queryBuilders = QueryBuilders.boolQuery()
-                .must(QueryBuilders.termQuery("company.id", companyID))
-                .must(queryStringQuery(query));
-        return StreamSupport
-                .stream(memberSearchRepository.search(queryBuilders).spliterator(), false)
-                .collect(Collectors.toList());
-    }
+
 }

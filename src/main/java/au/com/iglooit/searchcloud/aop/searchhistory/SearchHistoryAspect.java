@@ -1,22 +1,17 @@
 package au.com.iglooit.searchcloud.aop.searchhistory;
 
-import au.com.iglooit.searchcloud.config.Constants;
 import au.com.iglooit.searchcloud.domain.SearchHistory;
 import au.com.iglooit.searchcloud.service.SearchHistoryService;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Aspect for logging execution of search.
@@ -28,12 +23,13 @@ public class SearchHistoryAspect {
     @Inject
     private SearchHistoryService searchHistoryService;
 
-    @Pointcut("execution(au.com.iglooit.searchcloud.service.MemberSystemService.search(*))")
-    public void loggingPointcut() {
+//    @Pointcut("within(au.com.iglooit.searchcloud.service..*)")
+    @Pointcut("within(au.com.iglooit.searchcloud.service.memberservice..*)")
+    public void searchPointcut() {
     }
 
-    @Around("loggingPointcut()")
-    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("searchPointcut()")
+    public Object searchAround(ProceedingJoinPoint joinPoint) throws Throwable {
         log.debug("put search args into search history");
         SearchHistory searchHistory = new SearchHistory();
         searchHistory.setQuery(Arrays.toString(joinPoint.getArgs()));

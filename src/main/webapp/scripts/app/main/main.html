@@ -12,12 +12,35 @@
                     You are logged in as user "{{account.login}}".
                 </div>
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated">
-                    If you want to <a class="alert-link" href="#/login">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                <div class="alert alert-warning" ng-switch-when="false" >
+                    <p>Example:</p>
+                    <p>
+                        POST http://localhost:8080/common/api/data/test
+                    </p>
+                    <p>
+                        {
+                        "name":"nicholas zhu",
+                        "mobile":"0433 000 000"
+                        }
+                    </p>
                 </div>
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register">
-                    You don't have an account yet? <a class="alert-link" href="#/register">Register a new account</a>
+                <div class="alert alert-warning" ng-switch-when="false" >
+                    <p>
+                        Upload File Example:
+                    </p>
+                    <p>
+                        POST http://localhost:3000/searchcloud/api/_upload
+                    </p>
+                    <p>
+                        <lu>
+                            <li>memberID=11</li>
+                            <li>mobile=1001</li>
+                            <li>name=test</li>
+                            <li>file=upload file</li>
+                        </lu>
+
+                    </p>
                 </div>
             </div>
 

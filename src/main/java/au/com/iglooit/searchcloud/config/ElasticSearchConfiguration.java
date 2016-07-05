@@ -2,6 +2,7 @@ package au.com.iglooit.searchcloud.config;
 
 import java.io.IOException;
 
+import au.com.iglooit.searchcloud.config.elasticsearch.ElasticSearchWrapper;
 import org.elasticsearch.client.Client;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,11 @@ public class ElasticSearchConfiguration {
     @Bean
     public ElasticsearchTemplate elasticsearchTemplate(Client client, Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder) {
         return new ElasticsearchTemplate(client, new CustomEntityMapper(jackson2ObjectMapperBuilder.createXmlMapper(false).build()));
+    }
+
+    @Bean
+    public ElasticSearchWrapper elasticSearchWrapper(Client client) {
+        return new ElasticSearchWrapper(client);
     }
 
     public class CustomEntityMapper implements EntityMapper {

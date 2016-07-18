@@ -7,7 +7,7 @@ angular.module('plagueheartApp')
                 url: '/search',
                 parent: 'site',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'plagueheartApp.search.home.title'
                 },
                 views: {

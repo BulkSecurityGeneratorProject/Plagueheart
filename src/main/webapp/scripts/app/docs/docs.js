@@ -4,15 +4,15 @@ angular.module('plagueheartApp')
     .config(function ($stateProvider) {
         $stateProvider
             .state('docs', {
-                parent: 'admin',
+                parent: 'site',
                 url: '/docs',
                 data: {
-                    authorities: ['ROLE_ADMIN'],
+                    authorities: [],
                     pageTitle: 'global.menu.admin.apidocs'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/admin/docs/docs.html'
+                        templateUrl: 'scripts/app/docs/docs.html'
                     }
                 },
                 resolve: {

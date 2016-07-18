@@ -1,0 +1,65 @@
+{
+    "member": {
+        "properties": {
+            "id": {
+                "type": "long"
+            },
+            "companyId": {
+                "type": "long"
+            },
+            "apiKey": {
+                "type": "string"
+            },
+            "docId": {
+                "type": "long"
+            },
+            "title": {
+                "type": "string"
+            },
+            "fileName": {
+                "type": "string"
+            },
+            "fileSize": {
+                "type": "string"
+            },
+            "createdBy": {
+                "type": "string"
+            },
+            "appMeta": {
+                "type": "string"
+            },
+            "file": {
+                "type": "attachment",
+                "path": "full",
+                "fields": {
+                    "file": {
+                        "type": "string",
+                        "term_vector": "with_positions_offsets",
+                        "store": true
+                    },
+                    "author": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string",
+                        "store": "yes"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "date",
+                        "ignore_malformed": false,
+                        "format": "dateOptionalTime"
+                    },
+                    "keywords": {
+                        "type": "string"
+                    },
+                    "content_type": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

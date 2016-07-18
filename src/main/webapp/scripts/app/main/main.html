@@ -13,9 +13,9 @@
                 </div>
 
                 <div class="alert alert-warning" ng-switch-when="false" >
-                    <p>Example:</p>
+                    <p>Example Query:</p>
                     <p>
-                        POST http://localhost:8080/common/api/data/test
+                        GET http://localhost:3000/document/api/_search/online
                     </p>
                     <p>
                         {
@@ -30,16 +30,28 @@
                         Upload File Example:
                     </p>
                     <p>
-                        POST http://localhost:3000/searchcloud/api/_upload
+                        POST http://localhost:3000/api/document/_upload/document
                     </p>
                     <p>
                         <lu>
-                            <li>memberID=11</li>
-                            <li>mobile=1001</li>
-                            <li>name=test</li>
-                            <li>file=upload file</li>
+                            <li>companyId=11</li>
+                            <li>apiKey=1001</li>
+                            <li>docId=1001</li>
+                            <li>title=test title</li>
+                            <li>tags=1,2,3</li>
+                            <li>fileName=test.pdf</li>
+                            <li>fileSize=1MB</li>
+                            <li>createdBy=tester</li>
+                            <li>createdDateTime=2016-07-15</li>
+                            <li>appMeta={"MemberId": "100389","CaseId":6783,"EmpId":1239,"WorkplaceId":873}</li>
                         </lu>
 
+                    </p>
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" >
+                    <p>
+                        For more API documents, you can reference: <a href="/#/docs">More</a>
                     </p>
                 </div>
             </div>

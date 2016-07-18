@@ -1,5 +1,6 @@
 package au.com.iglooit.searchcloud.config;
 
+import au.com.iglooit.searchcloud.cons.DocumentAPIConstants;
 import au.com.iglooit.searchcloud.security.*;
 import au.com.iglooit.searchcloud.web.filter.CsrfCookieGeneratorFilter;
 import org.springframework.context.annotation.Bean;
@@ -70,7 +71,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/test/**")
             .antMatchers("/searchcloud/**")
             .antMatchers("/h2-console/**")
-            .antMatchers("/common/**");
+            .antMatchers("/common/**")
+            .antMatchers(DocumentAPIConstants.DOCUMENT_API_BASE + "/**")
+            .antMatchers("/v2/api-docs/**")
+            .antMatchers("/swagger-ui/index.html");
     }
 
     @Override
@@ -128,10 +132,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/mappings/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/liquibase/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/configuration/security").permitAll()
             .antMatchers("/configuration/ui").permitAll()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/protected/**").authenticated() ;
 
     }

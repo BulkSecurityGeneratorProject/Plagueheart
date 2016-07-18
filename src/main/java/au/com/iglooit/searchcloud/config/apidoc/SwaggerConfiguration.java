@@ -4,6 +4,8 @@ import au.com.iglooit.searchcloud.config.Constants;
 import au.com.iglooit.searchcloud.config.JHipsterProperties;
 
 import java.util.Date;
+
+import au.com.iglooit.searchcloud.cons.DocumentAPIConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.*;
@@ -26,12 +28,11 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2
-@Profile("!" + Constants.SPRING_PROFILE_PRODUCTION)
 public class SwaggerConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
 
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN = DocumentAPIConstants.DOCUMENT_API_BASE + "/.*";
 
     /**
      * Swagger Springfox configuration.

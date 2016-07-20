@@ -108,6 +108,15 @@ public class DocumentAPIResource {
     @Timed
     public ResponseEntity<List<PDocumentDTO>> searchDocument(@PathVariable String query) {
         log.debug("Request to search document for query {}", query);
+        return new ResponseEntity<List<PDocumentDTO>>(pDocumentSearchService.searchByKey(query), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/_search",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<PDocumentDTO>> query(@RequestParam("query") String query) {
+        log.debug("Request to search document for query {}", query);
         return new ResponseEntity<List<PDocumentDTO>>(pDocumentSearchService.search(query), HttpStatus.OK);
     }
 

@@ -8,6 +8,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,12 +33,22 @@ public class PDocumentSearchService {
         return new PDocumentDTO(pDocumentSearchRepository.save(pDocument));
     }
 
-    public List<PDocumentDTO> search(String query){
+    public List<PDocumentDTO> searchByKey(String query){
         log.debug("REST request to search PDocument for query {}", query);
         QueryBuilder queryBuilders = QueryBuilders.boolQuery()
                 .must(queryStringQuery(query));
         return StreamSupport
                 .stream(pDocumentSearchRepository.search(queryBuilders).spliterator(), false)
+                .map(PDocumentDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PDocumentDTO> search(String query){
+        log.debug("REST request to search PDocument for query {}", query);
+        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.wrapperQuery(query)).build();
+
+        return StreamSupport
+                .stream(pDocumentSearchRepository.search(searchQuery).spliterator(), false)
                 .map(PDocumentDTO::new)
                 .collect(Collectors.toList());
     }

@@ -13,15 +13,22 @@
                 </div>
 
                 <div class="alert alert-warning" ng-switch-when="false" >
-                    <p>Example Query:</p>
+                    <p>Example Query Key:</p>
                     <p>
-                        GET http://localhost:3000/document/api/_search/online
+                        GET http://localhost:3000/document/api/_search/java
                     </p>
                     <p>
-                        {
-                        "name":"nicholas zhu",
-                        "mobile":"0433 000 000"
-                        }
+                        GET http://localhost:3000/document/api/_search/company/16/cq
+                    </p>
+                </div>
+
+                <div class="alert alert-warning" ng-switch-when="false" >
+                    <p>Example Query String:</p>
+                    <p>
+                        GET http://localhost:3000/document/api/_search?query={"query_string": {"query": "java"}}
+                    </p>
+                    <p>
+                        You can use any elasticsearch query
                     </p>
                 </div>
 

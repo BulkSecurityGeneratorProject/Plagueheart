@@ -134,7 +134,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/liquibase/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/configuration/security").permitAll()
             .antMatchers("/configuration/ui").permitAll()
-            .antMatchers("/protected/**").authenticated() ;
+            .antMatchers("/protected/**").authenticated();
+
+        http.csrf().disable();
 
     }
 

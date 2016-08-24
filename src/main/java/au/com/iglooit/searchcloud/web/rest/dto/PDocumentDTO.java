@@ -37,6 +37,8 @@ public class PDocumentDTO implements Serializable {
 
     private String downloadURL;
 
+    private String highLight;
+
     public PDocumentDTO() {
 
     }
@@ -53,6 +55,7 @@ public class PDocumentDTO implements Serializable {
         appMeta = pDocument.getAppMeta();
         tags = pDocument.getTags().stream().map(d -> d).collect(toList());
         downloadURL = DocumentAPIConstants.DOCUMENT_API_DOWNLOAD_URL + pDocument.getId();
+        highLight = pDocument.getHighLightMessage();
     }
 
     public Integer getCompanyId() {
@@ -143,6 +146,14 @@ public class PDocumentDTO implements Serializable {
         this.downloadURL = downloadURL;
     }
 
+    public String getHighLight() {
+        return highLight;
+    }
+
+    public void setHighLight(String highLight) {
+        this.highLight = highLight;
+    }
+
     @Override
     public String toString() {
         return "PDocument{" +
@@ -157,6 +168,7 @@ public class PDocumentDTO implements Serializable {
                 ", downloadURL='" + downloadURL + "'" +
                 ", tags={" + tags + "}" +
                 ", appMeta='" + appMeta + "'" +
+                ", highLight='" + highLight + "'" +
                 '}';
     }
 

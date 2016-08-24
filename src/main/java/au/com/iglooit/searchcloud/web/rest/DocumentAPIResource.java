@@ -28,6 +28,7 @@ import java.util.List;
 /**
  * Created by nicholaszhu on 15/07/2016.
  */
+@CrossOrigin(maxAge = 6000)
 @RestController
 @RequestMapping(DocumentAPIConstants.DOCUMENT_API_BASE)
 public class DocumentAPIResource {
@@ -109,6 +110,16 @@ public class DocumentAPIResource {
     public ResponseEntity<List<PDocumentDTO>> searchDocument(@PathVariable String query) {
         log.debug("Request to search document for query {}", query);
         return new ResponseEntity<List<PDocumentDTO>>(pDocumentSearchService.searchByKey(query), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Timed
+    public void deleteDocument(@PathVariable Long id) {
+        log.debug("Request to delete the document for id {}", id);
+        pDocumentSearchService.deleteDocument(id);
     }
 
     @RequestMapping(value = "/_search",

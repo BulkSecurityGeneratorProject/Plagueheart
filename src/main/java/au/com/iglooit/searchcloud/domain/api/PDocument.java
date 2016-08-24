@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,6 +37,9 @@ public class PDocument implements Serializable {
     private String file;
 
     private List<Integer> tags;
+
+    @Transient
+    private String highLightMessage;
 
     public Long getId() {
         return id;
@@ -131,6 +135,14 @@ public class PDocument implements Serializable {
 
     public void setFile(String file) {
         this.file = file;
+    }
+
+    public String getHighLightMessage() {
+        return highLightMessage;
+    }
+
+    public void setHighLightMessage(String highLightMessage) {
+        this.highLightMessage = highLightMessage;
     }
 
     @Override

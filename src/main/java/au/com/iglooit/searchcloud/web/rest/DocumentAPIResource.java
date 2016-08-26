@@ -4,8 +4,10 @@ import au.com.iglooit.searchcloud.cons.DocumentAPIConstants;
 import au.com.iglooit.searchcloud.domain.api.PDocument;
 import au.com.iglooit.searchcloud.ex.AppEx;
 import au.com.iglooit.searchcloud.service.api.PDocumentSearchService;
+import au.com.iglooit.searchcloud.service.util.AesCryptUtil;
 import au.com.iglooit.searchcloud.util.PDocumentUtil;
 import au.com.iglooit.searchcloud.web.rest.dto.PDocumentDTO;
+import au.com.iglooit.searchcloud.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,7 @@ public class DocumentAPIResource {
     public
     @ResponseBody
     ResponseEntity<PDocumentDTO> handleFileUpload(@RequestParam("file") MultipartFile file,
-                                               @RequestParam("document") PDocument pDocument) {
+                                                  @RequestParam("document") PDocument pDocument) {
         if (!file.isEmpty()) {
             try {
                 String content = DatatypeConverter.printBase64Binary(file.getBytes());
@@ -65,16 +67,16 @@ public class DocumentAPIResource {
     public
     @ResponseBody
     ResponseEntity<PDocumentDTO> handleCreateDocument(@RequestParam("file") MultipartFile file,
-                                                   @RequestParam("companyId") Integer companyId,
-                                                   @RequestParam("apiKey") String apiKey,
-                                                   @RequestParam("docId") Integer docId,
-                                                   @RequestParam("title") String title,
-                                                   @RequestParam("tags") String tags,
-                                                   @RequestParam("fileName") String fileName,
-                                                   @RequestParam("fileSize") String fileSize,
-                                                   @RequestParam("createdBy") String createdBy,
-                                                   @RequestParam("createdDateTime") String createdDateTime,
-                                                   @RequestParam("appMeta") String appMeta) {
+                                                      @RequestParam("companyId") Integer companyId,
+                                                      @RequestParam("apiKey") String apiKey,
+                                                      @RequestParam("docId") Integer docId,
+                                                      @RequestParam("title") String title,
+                                                      @RequestParam("tags") String tags,
+                                                      @RequestParam("fileName") String fileName,
+                                                      @RequestParam("fileSize") String fileSize,
+                                                      @RequestParam("createdBy") String createdBy,
+                                                      @RequestParam("createdDateTime") String createdDateTime,
+                                                      @RequestParam("appMeta") String appMeta) {
         if (!file.isEmpty()) {
             try {
                 String content = DatatypeConverter.printBase64Binary(file.getBytes());
@@ -112,14 +114,18 @@ public class DocumentAPIResource {
         return new ResponseEntity<List<PDocumentDTO>>(pDocumentSearchService.searchByKey(query), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/{docId}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Timed
-    public void deleteDocument(@PathVariable Long id) {
-        log.debug("Request to delete the document for id {}", id);
-        pDocumentSearchService.deleteDocument(id);
+    public ResponseEntity<Void> deleteDocument(@PathVariable String docId) {
+        log.debug("Request to delete the document for docId {}", docId);
+        if (pDocumentSearchService.deleteDocument(docId)) {
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("docId", docId.toString())).build();
+        } else {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createEntityDeletionAlert("docId",
+                    docId.toString())).build();
+        }
     }
 
     @RequestMapping(value = "/_search",
@@ -136,7 +142,7 @@ public class DocumentAPIResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<PDocumentDTO>> searchDocumentInCompany(@PathVariable("companyId") String companyId,
-                                                                   @PathVariable String query) {
+                                                                      @PathVariable String query) {
         log.debug("Request to search document for query {}", query);
         return new ResponseEntity<List<PDocumentDTO>>(pDocumentSearchService.search(companyId, query), HttpStatus.OK);
     }
@@ -149,7 +155,9 @@ public class DocumentAPIResource {
                                  @PathVariable("id") String id) {
 
         log.debug("Request to download document for id {}", id);
-        PDocument pDocument = pDocumentSearchService.loadDocument(Long.valueOf(id));
+        // decode the id firstly
+        String esId = AesCryptUtil.decrypt(id, DocumentAPIConstants.DOCUMENT_API_ENCODE_PASSWORD);
+        PDocument pDocument = pDocumentSearchService.loadDocument(Long.valueOf(esId));
         String mimeType = URLConnection.guessContentTypeFromName(pDocument.getFileName());
         if (mimeType == null) {
             log.warn("mimetype is not detectable, will take default");

@@ -2,11 +2,11 @@ package au.com.iglooit.searchcloud.web.rest.dto;
 
 import au.com.iglooit.searchcloud.cons.DocumentAPIConstants;
 import au.com.iglooit.searchcloud.domain.api.PDocument;
+import au.com.iglooit.searchcloud.service.util.AesCryptUtil;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
@@ -39,12 +39,15 @@ public class PDocumentDTO implements Serializable {
 
     private String highLight;
 
+    private Long id;
+
     public PDocumentDTO() {
 
     }
 
     public PDocumentDTO(PDocument pDocument) {
         companyId = pDocument.getCompanyId();
+        id = pDocument.getId();
         apiKey = pDocument.getApiKey();
         docId = pDocument.getDocId();
         title = pDocument.getTitle();
@@ -54,7 +57,8 @@ public class PDocumentDTO implements Serializable {
         createdDateTime = pDocument.getCreatedDateTime();
         appMeta = pDocument.getAppMeta();
         tags = pDocument.getTags().stream().map(d -> d).collect(toList());
-        downloadURL = DocumentAPIConstants.DOCUMENT_API_DOWNLOAD_URL + pDocument.getId();
+        downloadURL = DocumentAPIConstants.DOCUMENT_API_DOWNLOAD_URL + AesCryptUtil.encrypt(pDocument.getId()
+                        .toString(), DocumentAPIConstants.DOCUMENT_API_ENCODE_PASSWORD);
         highLight = pDocument.getHighLightMessage();
     }
 
@@ -154,9 +158,18 @@ public class PDocumentDTO implements Serializable {
         this.highLight = highLight;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "PDocument{" +
+                ", id='" + id + "'" +
                 ", companyId='" + companyId + "'" +
                 ", apiKey='" + apiKey + "'" +
                 ", docId='" + docId + "'" +
